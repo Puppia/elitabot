@@ -3,6 +3,11 @@ const fs = require('fs');
 const parser = require('./parser');
 const configTracker = require('./configtracker');
 const modules = fs.readdirSync('./modules');
+require('dotenv/config');
+const http = require('http');
+const port = process.env.PORT || 3000;
+// this is a simple server 
+http.createServer().listen(port);
 
 const client = new Discord.Client();
 const dispatch = new parser();
@@ -26,4 +31,8 @@ client.on('message', (msg) => {
     dispatch.informModules(msg);
 });
 
-client.login(config.get('bot-token'));  
+bot.on ('error', err => {
+    console.log(err);
+})
+
+client.login(config.get('process.env.TOKEN'));
